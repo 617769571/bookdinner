@@ -1,0 +1,154 @@
+<!-- 登录页面 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="address=no">
+	<title>登录</title>
+</head>
+<link rel="stylesheet" href="../css/login.css">
+<script src="../js/jquery-3.2.1.min.js"></script>
+
+<body>
+	<div class="contant">
+		<div class="loginFrom">
+			<div class="title">登录信息</div>
+			<form action="">
+				<div class="loginInputBox">
+					<label for="yourName">您的姓名是</label>
+					<input type="text" id="yourName">
+				</div>
+				<div class="loginInputBox">
+					<label for="yourPhone">您的手机</label>
+					<input type="number" id="yourPhone">
+				</div>
+				<!-- <div class="loginInputBox">
+					<label for="yourCode">验证码</label>
+					<input type="number" id="yourCode">
+					<input type="button" class="codeBtn" value="获取验证码">
+				</div> -->
+			</form>
+			<div id="loginBtn">
+				<button id="login" onclick="history.go(-1)">登  录</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+
+	var _code = queryParam("code");
+	var openid  = '';
+	if (window.localStorage.openid&&window.localStorage.getItem("openid")!='null') {
+		openid = window.localStorage.getItem("openid");
+
+	}else {
+		$.ajax({
+		    url:'https://www.hsjbg.top/bookDinner/code/get',
+		    type: "POST",
+
+		    async:false,
+		    data: {
+		        code: _code
+		    },
+		    success:function(res){
+		        console.log(res);
+		     
+		        if (res) {
+		        	openid = res;
+		            window.localStorage.setItem("openid",res);
+		          
+		        }
+		    }
+		})
+		
+	}
+	//获取用户信息
+window.onload = function(){
+
+
+	$.ajax({
+        url: 'https://www.hsjbg.top/bookDinner/user/ByOpenid',
+        type: "POST",
+
+		async:false,
+        data: {
+         openid: openid
+     	},
+
+        success: function(res) {
+           
+       
+            if(res.role==0){
+                //跳转到领导二维码
+                console.log((res.qrcode));
+                location.href = res.qrcode;
+			}else if(res.role==1){
+                window.localStorage.setItem("userName",res.name);
+                window.localStorage.setItem("userTel",res.tel);
+
+	                location.href="order.html";
+                
+			}
+        },
+        // complete:function(res){
+        // 	alert(JSON.stringify(res));
+        // }
+    });
+}
+	
+
+	 
+
+
+
+
+function queryParam(name) {
+　　　　var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+　　　　var r = window.location.search.substr(1).match(reg);
+　　　　if(r != null) return unescape(r[2]);
+　　return null;
+　　};
+
+
+
+
+	 $('#login').on('click',function () {
+		 window
+	     var name=$('#yourName').val();
+	     var tel = $('#yourPhone').val();
+         console.log(name);
+         console.log(tel);
+
+         
+          $.ajax({
+
+              type:"POST",
+              url: "https://www.hsjbg.top/bookDinner/user/login",
+              dataType:"json",
+              async:false,
+              data:{
+                  name:name,
+                  tel:tel,
+                  openid:openid
+      		},
+
+              success:function(data){
+                  console.log(data);
+              if(data) { 
+   
+				location.reload();
+              }else{ //登陆失败
+                  alert("登录失败");
+              }
+          },
+     
+      })
+	 })
+</script>
+</html>

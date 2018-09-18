@@ -1,0 +1,114 @@
+html{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-size: 23px;
+}
+
+@media only screen and (min-width: 401px) {
+html {
+font-size: 27px !important;
+}
+}
+@media only screen and (min-width: 428px) {
+html {
+font-size: 29px !important;
+}
+}
+@media only screen and (min-width: 481px) {
+html {
+font-size: 33px !important;
+}
+}
+@media only screen and (min-width: 569px) {
+html {
+font-size: 38px !important;
+}
+}
+@media only screen and (min-width: 641px) {
+html {
+font-size: 45px !important;
+}
+}
+@unit: 40rem;
+body{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+.contant{
+	width: 100%;
+	height: 100%;
+	background: url('../img/loginbg.png') no-repeat center;
+	-webkit-background-size: cover;
+	background-size: cover;
+	font-family: 微软雅黑;
+	display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -webkit-justify-content: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.loginFrom{
+	background-color: #ffffff;
+	border-radius: .25rem;
+	padding: .5rem;
+	line-height: 1.5rem;
+	text-align: center;
+	width: 80%;
+	max-width: 500rpx;
+}
+.loginFrom div{
+	border-bottom: .04rem solid #EAEAEA;
+}
+#loginBtn{
+	border: none;
+}
+#loginBtn button{
+	border-radius: .15rem;
+	background: -webkit-linear-gradient(left, #FF713D, #FF3D62);
+	background: -o-linear-gradient(left, #FF713D, #FF3D62);
+	background: linear-gradient(to right, #FF713D, #FF3D62);
+	/*height: 1rem;*/
+	padding: .25rem 1rem;
+	border: none;
+	color: #fff;
+	font-size: .7rem;
+}
+.title{
+	font-size: .9rem;
+	font-weight: bold;
+}
+.codeBtn{
+	line-height: normal;
+	border-radius: .15rem;
+	/*height: 1rem;*/
+	color: #fff;
+	background-color: #FE913E;
+	font-size: .6rem
+}
+.loginInputBox{
+	margin-top: 1rem;
+	display: -webkit-flex;
+    display: flex;
+    font-size: .7rem;
+    align-content: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+input{
+	border:none;
+	padding: .25rem;
+	outline: none;
+	flex: 1;
+	font-size: .5rem;
+}
+#yourCode{
+	/*flex: .4;*/
+	width: 70%;
+}

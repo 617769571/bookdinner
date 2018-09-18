@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>员工点餐</title>
+	
+</head>
+<link rel="stylesheet" href="../css/all.css">
+<link rel="stylesheet" href="../css/order.css">
+<style>
+	.closeBtn{
+		display:none;
+	}
+	.submitBtn{
+		margin-bottom: 2rem;
+	}
+</style>
+<script src="../js/jquery-3.2.1.min.js"></script>
+<body>
+	<div class="contant">
+		<div class="header">
+			<img src="../img/title.jpg" mode="widthFix">
+		</div>
+
+		<div class="whiteBox">
+
+			<div class="radio">
+				<div class="btnTit">选择厂区：</div>
+				<div class="btn checkBtn" >总部</div>
+				<div class="btn" >工具</div>
+			</div>
+			<div class="btnBox">
+				<div class="btnTit">用餐类型：</div>
+				<div id="1" class="btn">临时订餐</div>
+				<div id="4"  class="btn">次日早餐</div>
+				<div id="2"  class="btn">次日午餐</div>
+				<div id="3"  class="btn">次日晚餐</div>
+
+			</div>
+		</div>
+		<button  type="button" class="btn addOrder submitBtn" onclick="addOrder()">提交订单</button>
+		<button  type="button" class="btn submitBtn" onclick="location.href='orderTwo.html'">客户订餐入口</button>
+		<button  type="button" class="btn submitBtn" onclick="location.href='orderlist.html'">我的账户</button>
+
+	</div>
+</body>
+<script>
+     var a;
+     var b;
+//	 $.ajax({
+//                url: 'http://www.hsjbg.top/bookDinner/openid/get',
+//                type: "POST",
+//                crossDomain: true,
+//
+//                success: function(res) {
+//                    console.log(res);
+//                }
+//            });
+
+	 $.ajax({
+                url: 'https://www.hsjbg.top/bookDinner/date/req',
+                type: "POST",
+                crossDomain: true,
+                async:false,
+                success: function(res) {
+				console.log(res)
+                    a = res;
+				if(!(res.lunch||res.dinner)){
+                    $('#1').hide();//关闭临时窗口
+				}
+				if(res.lunch){
+                    b=0;//定午餐
+				}
+				if(res.dinner){
+					b=1;//定晚餐
+				}
+                if(!(res.tomorrowEat)){
+					$('#2').hide();//关闭次日订餐窗口
+                    $('#3').hide();
+				}
+					
+
+                }
+            });
+</script>
+<script src="../js/order.js"></script>
+</html>

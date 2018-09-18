@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>订餐列表</title>
+	<link rel="stylesheet" href="../css/all.css">
+	<link rel="stylesheet" href="../css/layui.css">
+	
+	<style>
+		body{
+			font-family: 微软雅黑;
+		}
+		
+	</style>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="layui-form contant">
+	  	<table class="layui-table">
+		    <colgroup>
+				<!-- <col width="50"> -->
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+		    </colgroup>
+		    <thead>
+				<tr>
+					<th>用餐类型</th>
+					<th>用餐日期</th>
+					<th>二维码</th>
+					<th class='tuikuanth'>退款</th>
+				</tr> 
+		    </thead>
+		    <tbody class="news_content">
+		    	<!-- <tr>
+					<td>早餐</td>
+					<td>17-12-08</td>
+					<td>点击查看</td>
+					<td><button class="layui-btn layui-btn-xs">退款</button></td>
+				</tr> -->
+		    </tbody>
+		</table>
+	</div>
+</body>
+<script src="../js/servers.js"></script>
+<script>
+// var r = confirm('确定退款吗？');
+	var tuikuanBool,tuikuanBool1,tuikuanBool2;//判断是否开启退款按钮 false关 true开
+	window.onload = function () {
+		$.ajax({
+            url: 'https://www.hsjbg.top/bookDinner/date/req',
+            type: "POST",
+            crossDomain: true,
+            async:false,
+            success: function(res) {
+				console.log(res)
+                // a = res;
+				tuikuanBool2=res.refundTime;
+
+            }
+        });
+		
+		$.ajax({
+	        url: 'https://www.hsjbg.top/bookDinner/flag/get',
+	        type:"POST",
+	        dataType:"json",
+	        async:false,
+	        success:function(data){
+				// orderListLoad(data);
+				// console.log(data);
+				
+				tuikuanBool1 = data.flag;
+				tuikuanBool = tuikuanBool2&&tuikuanBool1;
+				$('.tuikuanth')[0].hidden = !tuikuanBool;
+	        },
+
+	    });
+		$.ajax({
+	        url: 'https://www.hsjbg.top/bookDinner/staff/getByDateAndOpenid',
+	        type:"POST",
+	        dataType:"json",
+	        async:false,
+	        data:{
+	        	openid:localStorage.openid
+	        },
+	        success:function(data){
+	        	console.log(data);
+				orderListLoad(data)
+	        },
+
+	    });
+
+	}
+	function orderListLoad(data){
+		var html = '';
+		if (data.length != 0) {
+
+			for (var i = 0; i < data.length; i++) {
+
+				var breakfast;
+				if (data[i].breakfast == 0) {
+					breakfast = '午餐';
+				}else {
+					breakfast = '晚餐';
+				}
+				// alert(tuikuanBool);
+				var	tkBtn = tuikuanBool?`<td><button class="layui-btn tkBtn layui-btn-xs" data-id="${data[i].sid}" data-empty3="${data[i].empty3}" data-lunch="${data[i].lunch}">退款</button></td>`:``;
+				html+=`
+					<tr>
+						<td>${breakfast}</td>
+						<td>${data[i].date.split(' ')[0]}</td>
+						<td><a href="${data[i].qrcodeadd}">点击查看</a></td>
+						${tkBtn}
+					</tr>
+				`;
+			}
+		}else {
+			html = `<tr><td colspan="${tuikuanBool?4:3}">暂无数据</td></tr>`;
+		}
+		$('.news_content').html(html);
+		$('.tkBtn').on('click',function(){
+			var empty3 = $(this).attr('data-empty3');
+			var lunch = $(this).attr('data-lunch');
+			var id = $(this).attr('data-id');
+			var r = confirm('确定退款吗？');
+	        if (!r){
+	            return;
+	        }
+			$.ajax({
+				type: "post",
+				url: https + "/wxpay/refund",
+				async: true,
+				data: {
+					out_trade_no:empty3,
+	                total_fee:lunch*100,
+				},
+				success: function(res) {
+					if(res) {
+						alert('退款成功');
+						tkType(id);
+						// location.reload();
+						// td.style.display = "none";
+					} else {
+						alert("退款失败")
+					}
+				}
+			});
+		})
+
+	}
+	function tkType (id) {
+			$.ajax({
+					type: "post",
+					url: https + "/staff/update",
+					async: true,
+					data: {
+						id:id,
+						// state:1
+
+					},
+					success: function(res) {
+						console.log(res);
+						location.reload();
+					}
+				});
+		}
+	
+</script>
+</html>

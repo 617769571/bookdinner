@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>订餐列表</title>
+	<link rel="stylesheet" href="../css/all.css">
+	<link rel="stylesheet" href="../css/layui.css">
+	
+	<style>
+		body{
+			font-family: 微软雅黑;
+		}
+		
+	</style>
+	<script src="../js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="layui-form contant">
+	  	<table class="layui-table">
+		    <colgroup>
+				<!-- <col width="50"> -->
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+		    </colgroup>
+		    <thead>
+				<tr>
+					<th>用餐类型</th>
+					<th>用餐日期</th>
+					<th>二维码</th>
+					
+				</tr> 
+		    </thead>
+		    <tbody class="news_content">
+		    	<!-- <tr>
+					<td>早餐</td>
+					<td>17-12-08</td>
+					<td>点击查看</td>
+					<td><button class="layui-btn layui-btn-xs">退款</button></td>
+				</tr> -->
+		    </tbody>
+		</table>
+	</div>
+</body>
+<script src="../js/servers.js"></script>
+<script>
+// var r = confirm('确定退款吗？');
+	// var tuikuanBool,tuikuanBool1,tuikuanBool2;//判断是否开启退款按钮 false关 true开
+	window.onload = function () {
+		// $.ajax({
+	 //        url: 'https://www.hsjbg.top/bookDinner/clien/getToday',
+	 //        type:"POST",
+	 //        dataType:"json",
+	 //        async:false,
+	 //        data:{
+	 //        	openid:localStorage.openid,
+	 //        	proposertel:tel
+	        	
+	 //        },
+	 //        success:function(data){
+	 //        	alert(data);
+	 //        },
+
+	 //    });
+		$.ajax({
+	        url: 'https://www.hsjbg.top/bookDinner/clien/getToday',
+	        type:"POST",
+	        dataType:"json",
+	        async:false,
+	        data:{
+	        	openid:localStorage.openid,
+	        	proposertel:localStorage.tel
+	        },
+	        success:function(data){
+	        	console.log(data);
+				orderListLoad(data);
+	        },
+
+	    });
+
+	}
+	function orderListLoad(data){
+		var html = '';
+		if (data.length != 0) {
+
+			for (var i = 0; i < data.length; i++) {
+
+				var breakfast;
+				if (data[i].breakfast == 0) {
+					breakfast = '午餐';
+				}else {
+					breakfast = '晚餐';
+				}
+				
+				html+=`
+					<tr>
+						<td>${breakfast}</td>
+						<td>${data[i].date}</td>
+						<td><a href="${data[i].clientqrcode}">点击查看</a></td>
+					</tr>
+				`;
+			}
+		}else {
+			html = `<tr><td colspan="3">暂无数据</td></tr>`;
+		}
+		$('.news_content').html(html);
+		
+
+	}
+
+	
+</script>
+</html>

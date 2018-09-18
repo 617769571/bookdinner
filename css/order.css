@@ -1,0 +1,87 @@
+.contant{
+	width: 100%;
+}
+img{
+	width: 100%;
+}
+.whiteBox{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	padding: 1rem;
+	align-items: center;
+	align-content: center;
+	-webkit-justify-content:space-between;
+	justify-content: space-between;
+	-moz-box-pack:space-between;
+	-webkit--moz-box-pack:space-between;
+	box-pack:space-between;
+}
+.btnBox{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	align-content: center;
+	font-size: 1.3rem;
+	line-height: 2.4rem;
+	padding: 1.6rem 0;
+	-webkit-justify-content:space-between;
+	justify-content: space-between;
+	-moz-box-pack:space-between;
+	-webkit--moz-box-pack:space-between;
+	box-pack:space-between;
+	border-bottom: .1rem solid #EAEAEA;
+}
+.btn{
+	padding: 0 1.5rem;
+	border: .1rem solid #979797;
+	border-radius: .2rem;
+}
+.btnBox>.checkBtn{
+	background: #FF923D;
+	border: .1rem solid #FF923D;
+	color: #fff;
+}
+button{
+	line-height: 3.6rem;
+	font-size: 1.5rem;
+	color: #fff;
+	border:none;
+	border-radius: .5rem;
+	width: 85%;
+	display: block;
+	margin: auto;
+	background: -webkit-linear-gradient(left, #FF713D, #FF3D62);
+			background: -o-linear-gradient(left, #FF713D, #FF3D62);
+			background: linear-gradient(to right, #FF713D, #FF3D62);
+}
+.radio{
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	align-content: center;
+	font-size: 1.3rem;
+	line-height: 2.4rem;
+	padding: 1.6rem 0;
+	
+	border-bottom: .1rem solid #EAEAEA;
+}
+.radio .btn{
+	margin-left: .8rem; 
+}
+.radio>.checkBtn{
+	background: #FF923D;
+	border: .1rem solid #FF923D;
+	color: #fff;
+}
+.whiteInput{
+	flex-basis:auto;
+	height: 2.4rem;
+	border: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing:border-box; 
+	box-sizing:border-box;
+	font-size: 1.2rem;
+	width: 100%;
+	padding-left: 1rem;
+}
