@@ -96,6 +96,7 @@ function addOrder() {
                         }else if(b==2){
                             totalFee=ap;
                         }
+                    
                         aaaaa = true;
                     break;
                     case 2:
@@ -111,7 +112,7 @@ function addOrder() {
                         aaaaa=false;
                         break;
                     case 4:
-                        url ="/staff/tomorrow";
+                        url ="/staff/tomorrowBreakfast";
                         breakfast=2;
                         totalFee=breakfastP;
                         aaaaa=false;
@@ -217,11 +218,11 @@ function addClientOrder() {
                 async:false,
                 success: function(res) {
                     console.log(res);
-                    if(res.cbreakfast){
-                        b=2;//定早餐
-                    }else{
-                        $('#4').hide();
-                    }
+                    // if(res.breakfast){
+                    //     b=0;//定午餐
+                    // }else{
+                    //     $('#4').hide();
+                    // }
                     if(res.clunch){
                         b=0;//定午餐
                     }else{

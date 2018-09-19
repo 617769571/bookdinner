@@ -58,30 +58,33 @@
 //            });
 
 	 $.ajax({
-                url: 'https://www.hsjbg.top/bookDinner/date/req',
-                type: "POST",
-                crossDomain: true,
-                async:false,
-                success: function(res) {
-				console.log(res)
-                    a = res;
-				if(!(res.lunch||res.dinner)){
-                    $('#1').hide();//关闭临时窗口
-				}
-				if(res.lunch){
-                    b=0;//定午餐
-				}
-				if(res.dinner){
-					b=1;//定晚餐
-				}
-                if(!(res.tomorrowEat)){
-					$('#2').hide();//关闭次日订餐窗口
-                    $('#3').hide();
-				}
-					
-
-                }
-            });
+		url: 'https://www.hsjbg.top/bookDinner/date/req',
+		type: "POST",
+		crossDomain: true,
+		async:false,
+		success: function(res) {
+			console.log(res)
+				a = res;
+			if(!(res.lunch||res.dinner||res.breakfast)){
+				$('#1').hide();//关闭临时窗口
+			}
+			if(res.lunch){
+				b=0;//定午餐
+			}
+			if(res.dinner){
+				b=1;//定晚餐
+			}
+			if(res.breakfast){
+				b=2;//定早餐
+			}
+			if(!(res.tomorrowEat)){
+				$('#4').hide();
+				$('#2').hide();//关闭次日订餐窗口
+				$('#3').hide();
+			}
+	
+		}
+	});
 </script>
 <script src="../js/order.js"></script>
 </html>
